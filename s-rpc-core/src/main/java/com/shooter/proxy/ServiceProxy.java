@@ -2,14 +2,17 @@ package com.shooter.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import com.shooter.RpcApplication;
 import com.shooter.model.RpcRequest;
 import com.shooter.model.RpcResponse;
 import com.shooter.serializer.JdkSerializer;
 import com.shooter.serializer.Serializer;
+import com.shooter.serializer.SerializerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.ServiceLoader;
 
 /**
  * ClassName: ServiceProxy
@@ -30,7 +33,7 @@ public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 指定序列化器
-        Serializer serializer = new JdkSerializer();
+        Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
         // 构造请求
         RpcRequest rpcRequest = RpcRequest.builder()

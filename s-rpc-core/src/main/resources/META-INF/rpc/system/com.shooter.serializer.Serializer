@@ -1,0 +1,2 @@
+jdk=com.shooter.serializer.JdkSerializer
+hessian=com.shooter.serializer.HessianSerializer

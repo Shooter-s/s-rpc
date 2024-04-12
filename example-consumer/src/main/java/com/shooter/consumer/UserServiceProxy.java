@@ -2,12 +2,14 @@ package com.shooter.consumer;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import com.shooter.RpcApplication;
 import com.shooter.example.common.model.User;
 import com.shooter.example.common.service.UserService;
 import com.shooter.model.RpcRequest;
 import com.shooter.model.RpcResponse;
 import com.shooter.serializer.JdkSerializer;
 import com.shooter.serializer.Serializer;
+import com.shooter.serializer.SerializerFactory;
 
 import java.io.IOException;
 
@@ -22,7 +24,7 @@ import java.io.IOException;
 public class UserServiceProxy implements UserService {
     @Override
     public User getUser(User user) {
-        final Serializer serializer = new JdkSerializer();
+        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
         RpcRequest rpcRequest = RpcRequest
                 .builder()

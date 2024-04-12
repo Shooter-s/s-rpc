@@ -1,10 +1,13 @@
 package com.shooter.server;
 
+import com.shooter.RpcApplication;
+import com.shooter.config.RpcConfig;
 import com.shooter.model.RpcRequest;
 import com.shooter.model.RpcResponse;
 import com.shooter.registry.LocalRegistry;
 import com.shooter.serializer.JdkSerializer;
 import com.shooter.serializer.Serializer;
+import com.shooter.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -25,7 +28,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest request) {
         // 指定序列化器
-        final Serializer serializer = new JdkSerializer();
+        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
         // 记录日志
         System.out.println("Received request:" + request.method() + " " + request.uri());

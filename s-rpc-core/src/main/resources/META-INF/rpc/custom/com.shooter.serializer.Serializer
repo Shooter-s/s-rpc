@@ -1,0 +1,2 @@
+json=com.shooter.serializer.JsonSerializer
+kryo=com.shooter.serializer.KryoSerializer
