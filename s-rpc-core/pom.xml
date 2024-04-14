@@ -63,6 +63,12 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <!-- Etcd Java客户端 -->
+        <dependency>
+            <groupId>io.etcd</groupId>
+            <artifactId>jetcd-core</artifactId>
+            <version>0.7.7</version>
+        </dependency>
     </dependencies>
 
 </project>
