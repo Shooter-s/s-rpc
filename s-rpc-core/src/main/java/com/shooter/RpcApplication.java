@@ -32,8 +32,11 @@ public class RpcApplication {
         RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
         String registryStr = registryConfig.getRegistry(); // etcd
         Registry registry = RegistryFactory.getInstance(registryStr); // 工厂+spi获取registry
-        registry.init(registryConfig);
-        log.info("registry init,config = {}",registryConfig);
+        registry.init(registryConfig); // 初始化注册中心
+        log.info("registry init,config = {}", registryConfig);
+
+        // 创建并注册ShutdownHook，JVM退出时执行操作
+        Runtime.getRuntime().addShutdownHook(new Thread(registry::destroy));
     }
 
     /**
@@ -54,10 +57,10 @@ public class RpcApplication {
      * 获取配置
      * @return
      */
-    public static RpcConfig getRpcConfig(){
-        if (rpcConfig == null){
-            synchronized (RpcApplication.class){
-                if (rpcConfig == null){
+    public static RpcConfig getRpcConfig() {
+        if (rpcConfig == null) {
+            synchronized (RpcApplication.class) {
+                if (rpcConfig == null) {
                     init();
                 }
             }

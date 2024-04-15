@@ -68,4 +68,10 @@ public class RegistryTest{
         System.out.println(serviceMetaInfos);
     }
 
+    @Test
+    public void testHeartBeat() throws Exception {
+        register();
+        Thread.sleep(1000 * 60); // 阻塞一分钟
+    }
+
 }
