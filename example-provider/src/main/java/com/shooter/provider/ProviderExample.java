@@ -10,6 +10,7 @@ import com.shooter.registry.Registry;
 import com.shooter.registry.RegistryFactory;
 import com.shooter.server.HttpServer;
 import com.shooter.server.VertxHttpServer;
+import com.shooter.server.tcp.VertxTcpServer;
 
 import java.util.Locale;
 
@@ -44,7 +45,11 @@ public class ProviderExample {
             throw new RuntimeException(e);
         }
         // 启动web服务
-        HttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+        /*HttpServer httpServer = new VertxHttpServer();
+        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());*/
+
+        // 启动TCP服务
+        VertxTcpServer vertxTcpServer = new VertxTcpServer();
+        vertxTcpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
     }
 }
