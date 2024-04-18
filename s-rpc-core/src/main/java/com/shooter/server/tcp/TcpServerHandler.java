@@ -23,8 +23,8 @@ import java.lang.reflect.Method;
 public class TcpServerHandler implements Handler<NetSocket> {
     @Override
     public void handle(NetSocket netSocket) {
-        // 处理连接
-        netSocket.handler(buffer -> {
+        // 装饰者模式封装了原来处理请求逻辑，对原有handler对象增强了半包粘包的处理逻辑
+        TcpBufferHandlerWrapper bufferHandlerWrapper = new TcpBufferHandlerWrapper(buffer -> {
             // 接受请求，解码
             ProtocolMessage<RpcRequest> protocolMessage;
             try {
@@ -62,5 +62,6 @@ public class TcpServerHandler implements Handler<NetSocket> {
                 throw new RuntimeException("协议信息编码错误");
             }
         });
+        netSocket.handler(bufferHandlerWrapper); // 返回出来的是parser，需要最终处理
     }
 }
