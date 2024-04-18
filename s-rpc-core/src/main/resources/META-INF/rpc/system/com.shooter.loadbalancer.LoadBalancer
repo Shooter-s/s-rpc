@@ -1,0 +1,3 @@
+roundRobin=com.shooter.loadbalancer.RoundRobinLoadBalancer
+random=com.shooter.loadbalancer.RandomLoadBalancer
+consistentHash=com.shooter.loadbalancer.ConsistentHashLoadBalancer

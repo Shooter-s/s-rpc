@@ -71,8 +71,4 @@ public class VertxTcpServer implements HttpServer {
             }
         });
     }
-
-    public static void main(String[] args) {
-        new VertxTcpServer().doStart(8888);
-    }
 }
