@@ -22,19 +22,19 @@ public class ConsumerExample {
         User user = new User();
         user.setName("shooter");
         // 调用(3次)，测试缓存
-        for (int i = 0; i < 3; i++) {
+        /*for (int i = 0; i < 3; i++) {
             User newUser = userService.getUser(user);
             if (newUser != null){
                 System.out.println(newUser.getName());
             }else{
                 System.out.println("user == null");
             }
-        }
-        /*User newUser = userService.getUser(user);
+        }*/
+        User newUser = userService.getUser(user);
         if (newUser != null){
             System.out.println(newUser.getName());
         }else{
             System.out.println("user == null");
-        }*/
+        }
     }
 }

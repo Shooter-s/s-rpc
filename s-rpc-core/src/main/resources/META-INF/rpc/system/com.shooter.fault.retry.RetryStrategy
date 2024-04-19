@@ -1,0 +1,2 @@
+no=com.shooter.fault.retry.NoRetryStrategy
+fixedInterval=com.shooter.fault.retry.FixedIntervalRetryStrategy

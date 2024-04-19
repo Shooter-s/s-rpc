@@ -7,6 +7,8 @@ import cn.hutool.http.HttpResponse;
 import com.shooter.RpcApplication;
 import com.shooter.config.RpcConfig;
 import com.shooter.constant.RpcConstant;
+import com.shooter.fault.retry.RetryStrategy;
+import com.shooter.fault.retry.RetryStrategyFactory;
 import com.shooter.loadbalancer.LoadBalancer;
 import com.shooter.loadbalancer.LoadBalancerFactory;
 import com.shooter.model.RpcRequest;
@@ -83,9 +85,10 @@ public class ServiceProxy implements InvocationHandler {
             requestParams.put("methodName",rpcRequest.getMethodName());
             ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             // 发起Tcp请求
-            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo);
+            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+            RpcResponse rpcResponse = retryStrategy.doRetry(() -> VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo));
             return rpcResponse.getData();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
