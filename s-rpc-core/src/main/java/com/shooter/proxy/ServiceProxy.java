@@ -9,6 +9,8 @@ import com.shooter.config.RpcConfig;
 import com.shooter.constant.RpcConstant;
 import com.shooter.fault.retry.RetryStrategy;
 import com.shooter.fault.retry.RetryStrategyFactory;
+import com.shooter.fault.tolerant.TolerantStrategy;
+import com.shooter.fault.tolerant.TolerantStrategyFactory;
 import com.shooter.loadbalancer.LoadBalancer;
 import com.shooter.loadbalancer.LoadBalancerFactory;
 import com.shooter.model.RpcRequest;
@@ -86,7 +88,15 @@ public class ServiceProxy implements InvocationHandler {
             ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             // 发起Tcp请求
             RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
-            RpcResponse rpcResponse = retryStrategy.doRetry(() -> VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo));
+            RpcResponse rpcResponse;
+            try {
+                // 重试机制
+                rpcResponse = retryStrategy.doRetry(() -> VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo));
+            }catch (Exception e){
+                // 容错机制
+                TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
+                rpcResponse = tolerantStrategy.doTolerant(null,e);
+            }
             return rpcResponse.getData();
         } catch (Exception e) {
             e.printStackTrace();

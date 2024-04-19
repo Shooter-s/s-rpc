@@ -1,0 +1,2 @@
+failSafe=com.shooter.fault.tolerant.FailSafeTolerantStrategy
+failFast=com.shooter.fault.tolerant.FailFastTolerantStrategy

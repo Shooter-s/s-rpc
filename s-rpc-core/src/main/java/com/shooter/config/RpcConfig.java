@@ -1,6 +1,8 @@
 package com.shooter.config;
 
 import com.shooter.fault.retry.RetryStrategyKeys;
+import com.shooter.fault.tolerant.TolerantStrategy;
+import com.shooter.fault.tolerant.TolerantStrategyKeys;
 import com.shooter.loadbalancer.LoadBalancerKeys;
 import com.shooter.serializer.SerializerKeys;
 import io.netty.bootstrap.Bootstrap;
@@ -61,4 +63,9 @@ public class RpcConfig {
      * 重试策略
      */
     private String retryStrategy = RetryStrategyKeys.NO;
+
+    /**
+     * 容错策略
+     */
+    private String  tolerantStrategy = TolerantStrategyKeys.FAIL_FAST;
 }
