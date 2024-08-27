@@ -22,3 +22,9 @@ kryo=com.shooter.serializer.KryoSerializer
 然后通过 `final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer())` 动态获取。其中的 getSerializer 可以是 json 或者 kryo
 
 ![image](https://github.com/Shooter-s/s-rpc/blob/master/image/serializer-spi.png)
+
+# 注册中心
+
+RPC 框架的一个核心就是注册中心，目的是帮助消费者获取到提供者的调用地址，而不是将调用地址硬编码到项目中。注册中心的核心能力：数据的分布式存储，服务注册，服务发现，心跳检测，服务注销，监听等操作。
+
+![image](https://github.com/Shooter-s/s-rpc/blob/master/image/registry.png)
