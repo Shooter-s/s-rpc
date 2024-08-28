@@ -28,3 +28,17 @@ kryo=com.shooter.serializer.KryoSerializer
 RPC 框架的一个核心就是注册中心，目的是帮助消费者获取到提供者的调用地址，而不是将调用地址硬编码到项目中。注册中心的核心能力：数据的分布式存储，服务注册，服务发现，心跳检测，服务注销，监听等操作。
 
 ![image](https://github.com/Shooter-s/s-rpc/blob/master/image/registry.png)
+
+# 自定义协议
+
+RPC 框架的关键就是有自定义的协议。像 HTTP 协议请求格式比较 "重"，我们基于 TCP 等传输协议自己定义请求响应结构。
+
+自定义协议无非就是两步，自定义消息结构和自定义网络传输。
+
+消息结构设计：
+
+![image](https://github.com/Shooter-s/s-rpc/blob/master/image/消息结构体.png)
+
+编码 / 解码逻辑：
+
+![image](https://github.com/Shooter-s/s-rpc/blob/master/image/请求响应逻辑.png)
